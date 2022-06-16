@@ -44,7 +44,7 @@ lens = st.sidebar.selectbox(
 # mapping buttons to 
 page_function_mapping: Dict[str, Callable[[pd.DataFrame], None]] = {
     ("Automation Overview"): overall,
-    ("Individual Module Overview"): module,
+#     ("Individual Module Overview"): module,
    
 }
 
