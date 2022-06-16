@@ -109,48 +109,15 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
             st.markdown("")
             see_data = st.expander('You can click here to see the raw data first 👉👉👉')
             with see_data:
-                st.dataframe(data=perioddata)
+                st.write(perioddata)
         
         # # create space
         # st.markdown('##')
         
         guage_spacer1, guage_1 = st.columns((2.5, 5))
-        
-        # calculated availability
-        availability = 0.64
-        # Create availability chart
-        
-        fig = go.Figure(go.Indicator(
-            mode = "gauge+number",
-            value = availability,
-            domain = {'x': [0, 1], 'y': [0, 1]},
-            title = {'text': "Automation Availability"},
-            gauge = {'shape':'angular', 
-                 'steps': [{'range':[0,0.1], 'color': '#FF0000'},
-                           {'range':[0.1,0.2], 'color': '#FF3000'},
-                           {'range':[0.2,0.3], 'color': '#FF6000'},
-                           {'range':[0.3,0.4], 'color': '#FF9000'},
-                           {'range':[0.4,0.5], 'color': '#FFC000'},
-                           {'range':[0.5,0.6], 'color': '#FFF000'},
-                           {'range':[0.6,0.7], 'color': '#CCFF00'},
-                           {'range':[0.7,0.8], 'color': '#99FF00'},
-                           {'range':[0.8,0.9], 'color': '#55FF00'},
-                           {'range':[0.9, 1], 'color': '#00FF00'}],
-                 'bar' : {'color' :'black', 'thickness' : 0.5},
-                 
-            'bar' : {'color' :"#ADD8E6", 'thickness' : 0.4},
-            'axis' : {'range':[None, 1], 'tickformat' : '.0%'}
-            }), layout= format)
-        
-        fig.update_layout(autosize=True,
-        width=400,
-        height=250)
-
-        with guage_spacer1:
-            st.plotly_chart(fig, use_container_width=True)
-        
+            
+       
         # SUMMARY AND RECOMMENDATIONS
-        summary_spacer1, summary_1, summary_spacer2 = st.columns((.2, 7.1, .2))
         with guage_1:
             st.subheader('Summary')
             load_data = st.checkbox('Click here to view dataset detailed summary 👇 at the bottom of the page')
@@ -171,6 +138,39 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
         # fill in those three columns with respective metrics or KPIs
         dt = perioddata['Duration(mins)'].sum()
         prevdt = prevdata['Duration(mins)'].sum()
+        
+        # Auto availability
+        # calculated availability
+        availability = round((((noofdays * 8.5 * 60) - dt)/ (noofdays * 8.5 * 60)) , 3)
+        # Create availability chart
+        fig = go.Figure(go.Indicator(
+            mode = "gauge+number",
+            value = availability,
+            domain = {'x': [0, 1], 'y': [0, 1]},
+            title = {'text': "Automation Availability"},
+            gauge = {'shape':'angular', 
+                 'steps': [{'range':[0,0.1], 'color': '#FF0000'},
+                           {'range':[0.1,0.2], 'color': '#FF3000'},
+                           {'range':[0.2,0.3], 'color': '#FF6000'},
+                           {'range':[0.3,0.4], 'color': '#FF9000'},
+                           {'range':[0.4,0.5], 'color': '#FFC000'},
+                           {'range':[0.5,0.6], 'color': '#FFF000'},
+                           {'range':[0.6,0.7], 'color': '#CCFF00'},
+                           {'range':[0.7,0.8], 'color': '#99FF00'},
+                           {'range':[0.8,0.9], 'color': '#55FF00'},
+                           {'range':[0.9, 1], 'color': '#00FF00'}],
+                 'bar' : {'color' :'black', 'thickness' : 0.5},
+                 
+            'bar' : {'color' :"#ADD8E6", 'thickness' : 0.4},
+            'axis' : {'range':[None, 1], 'tickformat' : '.0'}
+            }), layout= format)
+        
+        fig.update_layout(autosize=True,
+        width=400,
+        height=250)
+
+        with guage_spacer1:
+            st.plotly_chart(fig, use_container_width=True)
         
         fig1 = go.Figure(layout = format)
         
@@ -342,44 +342,30 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
             st.plotly_chart(componentdistributionChart(perioddata, dateDict, component_selected),
                         use_container_width=True)
         
-        
-    # with row3_col4:
-    #     if module_selected == None:
-    #         st.markdown(f'<h1 style="color:#FF0000; font-size:24px;">{"Please select a query date.”"}</h1>', unsafe_allow_html=True)
-    #     else:
-    #         if component_measure_selected == 'Total time':
-    #             chart = componenttimeChart(perioddata, dateDict, component_selected)
-    #             st.plotly_chart(chart,use_container_width=True)
-    #         elif component_measure_selected == 'Count':
-    #             chart = modulecountChart(alarmDict, format, component_selected)
-    #             st.plotly_chart(chart,use_container_width=True)
-    #         elif component_measure_selected == 'Distribution':
-    #             chart = distributionChart(alarmDict, format, component_selected)
-    #             st.plotly_chart(chart,use_container_width=True)
-                
+
                 
     # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
     
-    # # Detailed summar
-    # sum1_spacer1, sum1_1, sum1_2, sum1_spacer2 = st.columns((.2, 8, 2, 4))
-    # with sum1_1:
-    #     if load_data == True:
-    #         see_data = st.expander('Click to expand/ minimise detailed summary of data set')
-    #         with see_data:
-    #             profile = ProfileReport(df, title='Machine data',
-    #                                 variables = {
-    #                                     "descriptions": {
-    #                                     'ProdnDate' : '1',
-    #                                     'ProdnShift' : '2',
-    #                                     'StartTime' : '3',
-    #                                     'EndTime' : '4',
-    #                                     'Duration(mins)' : '5',
-    #                                     'DT Reason Detail' : '6',
-    #                                     'Module' : '7'
-    #                                     }
-    #                                 }
-    #                                 )
-    #             st.dataframe(data=st_profile_report(profile))
+    # Detailed summary
+    sum1_spacer1, sum1_1, sum1_2, sum1_spacer2 = st.columns((.2, 8, 2, 4))
+    with sum1_1:
+        if load_data == True:
+            see_data = st.expander('Click to expand/ minimise detailed summary of data set')
+            with see_data:
+                profile = ProfileReport(df, title='Machine data',
+                                    variables = {
+                                        "descriptions": {
+                                        'ProdnDate' : '1',
+                                        'ProdnShift' : '2',
+                                        'StartTime' : '3',
+                                        'EndTime' : '4',
+                                        'Duration(mins)' : '5',
+                                        'DT Reason Detail' : '6',
+                                        'Module' : '7'
+                                        }
+                                    }
+                                    )
+                st.dataframe(data=st_profile_report(profile))
                 
     # ----------------------RECOMENDATION OUTLIERS---------------------
     outliers = findoutliers(timeDict)
@@ -389,6 +375,9 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
             see_outliers = st.expander('⚠ Warning! Outlliers Found')
             with see_outliers:
                 st.write(outliers)
+    else:
+        with guage_1:
+            st.markdown('🔹 Good! No outliers found')
                 
                 
     # ----------------------RECOMENDATION CORRELATION---------------------            
@@ -409,3 +398,13 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
             see_corr = st.expander('⚠ Warning! High Correlation Found')
             with see_corr:
                 st.write(output)
+                
+            
+    df = df[['ProdnDate', 'Duration(mins)']]
+    df = df.groupby(df.index // 7).mean()
+    st.write(df)
+    
+    fig = px.bar(df, title="Long-Form Input")
+    fig.update_layout(xaxis=dict(rangeslider=dict(visible=True),
+                             type="linear"))
+    st.write(fig)
