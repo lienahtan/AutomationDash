@@ -1,7 +1,4 @@
-import datetime
 from datetime import timedelta
-from itertools import groupby
-from turtle import color, width
 from numpy import average, size
 import pandas as pd
 import streamlit as st
