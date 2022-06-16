@@ -182,7 +182,7 @@ def modulecountChart(alarmDict, format, module_selected):
         xaxis_title="X Axis Title",
         yaxis_title="Y Axis Title",
         width=750,
-        height=500
+        height=500,
     )
     
     return timeDistCount
@@ -434,4 +434,3 @@ def componentdistributionChart(perioddata, dateDict, component):
     )
 
     return distPlot
-
