@@ -1,8 +1,6 @@
 import pandas as pd
 import plotly.express as px
 import numpy as np  
-from Module import module
-
 import streamlit as st
 from Overall import overall
 from PIL import Image
