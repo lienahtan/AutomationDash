@@ -59,7 +59,7 @@ if data_file is not None:
 else:
     # Nathaniel's data set location
     # TO BE USED FOR EASE OF CHANGING OF CODE
-    dataset_location = r"C:\Users\SPLSIP149\Desktop\Data from Adrian - Newest\Tester.xlsx"
+    dataset_location = r"Tester.xlsx"
     df = pd.read_excel(dataset_location, sheet_name= automation).iloc[:, : -3]
     st.warning("Please upload an excel file if not you are running a TESTER file.")
    
