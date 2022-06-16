@@ -1,10 +1,11 @@
 import pandas as pd
-import plotly.express as px
 import numpy as np  
+from Module import module
+
 import streamlit as st
+from typing import Dict, Callable
 from Overall import overall
 from PIL import Image
-
 
 
 
@@ -44,7 +45,7 @@ lens = st.sidebar.selectbox(
 # mapping buttons to 
 page_function_mapping: Dict[str, Callable[[pd.DataFrame], None]] = {
     ("Automation Overview"): overall,
-#     ("Individual Module Overview"): module,
+    ("Individual Module Overview"): overall,
    
 }
 
