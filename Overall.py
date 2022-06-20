@@ -16,6 +16,7 @@ import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 
+
 def overall(df: pd.DataFrame, lens, startDate, endDate):
     
     st.title("AUTOMATION OVERVIEW for " + lens)
@@ -248,7 +249,7 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
         dateandtime = automationAvail(perioddata, dateDict)
         dateandtime = pd.DataFrame.from_dict(list(dateandtime.items()))
 
-        interval = st.radio("Select time interval (Days)", ('7', '30'), horizontal = True)
+        interval = st.radio("Select time interval", ('Week', 'Month'), horizontal = True)
         
         day = startDate.weekday()
         if day == 0:
@@ -266,9 +267,11 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
         elif day == 6:
             day = 'W-SUN'
         
-        if interval == '7':
+        if interval == 'Week':
+            interval = '7'
             frequency = day
-        elif interval == '30':
+        elif interval == 'Month':
+            interval = '30'
             frequency = 'M'
             
         #starts from StartDate and every interval after that
