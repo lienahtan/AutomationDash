@@ -1,10 +1,5 @@
 from datetime import timedelta
-from enum import auto
-from lib2to3.pgen2.pgen import DFAState
 from this import d
-from tokenize import group
-from tracemalloc import start
-from numpy import average, size
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -20,7 +15,6 @@ from utils import modulecountChart, findvalueHolder, moduletimeChart, paretoChar
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
-
 
 def overall(df: pd.DataFrame, lens, startDate, endDate):
     
