@@ -434,3 +434,23 @@ def componentdistributionChart(perioddata, dateDict, component):
     )
 
     return distPlot
+
+
+
+def automationAvail(perioddata, dateDict):
+    
+    timeDict = {}
+    
+    timeDict.update(dateDict.copy())
+    
+    for row in perioddata.values.tolist():
+        timeDict[row[0].strftime("%#d/%#m/%Y")] += float(row[4])
+        
+    return timeDict
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+        
+        
+        
