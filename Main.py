@@ -14,7 +14,7 @@ st.set_page_config(
 )      
 
 
-image = Image.open(r"C:\Users\SPLSIP149\Downloads\Shimano.jpeg")
+image = Image.open(r"Shimano.jpeg")
 st.sidebar.image(image)
 
 # side bar
