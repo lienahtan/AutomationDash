@@ -10,7 +10,7 @@ from plotly.subplots import make_subplots
 import plotly.express as px 
 from utils import distributionChart, moduleTable, componenttimeChart, componentcountChart, componentdistributionChart
 from reco import findoutliers
-from utils import automationAvail, local_css
+from utils import automationAvail
 from utils import modulecountChart, findvalueHolder, moduletimeChart, paretoChart, componentTable
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
