@@ -1,4 +1,9 @@
 from datetime import timedelta
+from enum import auto
+from lib2to3.pgen2.pgen import DFAState
+from this import d
+from tokenize import group
+from tracemalloc import start
 from numpy import average, size
 import pandas as pd
 import streamlit as st
@@ -10,6 +15,7 @@ from plotly.subplots import make_subplots
 import plotly.express as px 
 from utils import distributionChart, moduleTable, componenttimeChart, componentcountChart, componentdistributionChart
 from reco import findoutliers
+from utils import automationAvail, local_css
 from utils import modulecountChart, findvalueHolder, moduletimeChart, paretoChart, componentTable
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
@@ -122,7 +128,7 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
             st.subheader('Summary')
             load_data = st.checkbox('Click here to view dataset detailed summary 👇 at the bottom of the page')
             st.markdown('Recommendations')
-            st.markdown('🔹 Current availability compared to previous: ')
+            st.markdown('🔹 Avaiablility is down 18% from last week')
             
             
         kpiword1, kpiword2, kpiword3 = st.columns(3)
@@ -167,7 +173,7 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
         
         fig.update_layout(autosize=True,
         width=400,
-        height=250)
+        height=350)
 
         with guage_spacer1:
             st.plotly_chart(fig, use_container_width=True)
@@ -240,11 +246,87 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
         st.markdown('##')
     
     
-        # # -------------------------Pareto Chart--------------------------------
+        rowauto_spacer1, rowauto_1, rowauto_spacer2 = st.columns((.2, 7.1, .2))
+        
+        with rowauto_1:
+            st.subheader('Automation Availability for ' + str(startDate.date()) + ' to ' + str(endDate.date()))
+    
+        dateandtime = automationAvail(perioddata, dateDict)
+        dateandtime = pd.DataFrame.from_dict(list(dateandtime.items()))
+
+        interval = st.radio("Select time interval (Days)", ('7', '30'), horizontal = True)
+        
+        day = startDate.weekday()
+        if day == 0:
+            day = 'W-MON'
+        elif day == 1:
+            day = 'W-TUE'
+        elif day == 2:
+            day = 'W-WED'
+        elif day == 3:
+            day = 'W-THU'
+        elif day == 4:
+            day = 'W-FRI'
+        elif day == 5:
+            day = 'W-SAT'
+        elif day == 6:
+            day = 'W-SUN'
+        
+        if interval == '7':
+            frequency = day
+        elif interval == '30':
+            frequency = 'M'
+            
+        #starts from StartDate and every interval after that
+        # intervalDates = pd.date_range(startDate, periods= ((noofdays + 1) /int(interval)) + 1, freq = frequency)
+        # st.write(intervalDates)
+        # st.write(startDate + timedelta(7 - startDate.weekday()))
+        # intervalHolder = []
+        # for i in range(1 , len(intervalDates)):
+        #     intervalHolder.append(60 * 8.5 * ((intervalDates[i] -  intervalDates[i-1]).days)) 
+        # intervalHolder.append(60 * 8.5 * ((endDate -  intervalDates[len(intervalDates) - 1]).days))
+        intervalDates = pd.date_range(startDate, periods= ((noofdays + 1) /int(interval)) + 1, freq = 'W-MON')
+        dateandtime =  dateandtime.iloc[7 - startDate.weekday():]
+       
+        dateandtime = dateandtime.groupby(dateandtime.index // int(interval)).sum()
+        
+        intervalHolder = []
+        for i in range(1 , len(intervalDates)):
+            intervalHolder.append(60 * 8.5 * ((intervalDates[i] -  intervalDates[i-1]).days))
+        intervalHolder.append(60 * 8.5 * ((endDate -  intervalDates[len(intervalDates) - 1]).days))
       
+    
+        autoavail = dateandtime.set_index(intervalDates)
+        autoavail[1] = autoavail[1].div(intervalHolder)
+        autoavail[1] = autoavail[1].div(-1)
+        autoavail = 1 + autoavail
+        autoavail['perchange'] = autoavail.pct_change()
+        autoavail['perchange'] = autoavail['perchange'] * 100
+        # st.write(intervalDates.tolist())
+    
+
+        fig = make_subplots(specs=[[{"secondary_y": True}]], vertical_spacing = 0.0)
+        # fig = px.bar(y=autoavail[1], x = autoavail.index, title="Automation Availability Tracking " + "(Interval: " + interval + " days)")
+        fig.add_trace(go.Bar(name = 'Automation Availability', y=autoavail[1], x = autoavail.index, text = round(autoavail[1], 2), textposition=['outside']*len(intervalDates)), secondary_y=False)
+        fig.add_trace(go.Scatter(y=autoavail['perchange'], x = autoavail.index), secondary_y=True)
+        fig.update_layout(
+            title_text = "Automation Availability Tracking " + "(Interval: " + interval + " days)",
+            autosize=True,
+            width=1600,
+            height=350,
+            bargap=0.50,
+            margin=dict(l=0,r=0,b=0,t=25),)
+        st.plotly_chart(fig)    
+        # st.write(autoavail)
+    
+        # # -------------------------Pareto Chart--------------------------------
+        
+        
         row2_spacer1, row2_1, row2_spacer2 = st.columns((.2, 7.1, .2))
+        
         with row2_1:
             st.subheader('Pareto Charts')
+            st.markdown('Investigate the percentage of each alarm time/count.') 
         
         tableG1, tableG2 = st.columns((1,1))
         
@@ -318,7 +400,7 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
     row3_col1, row3_col2, row3_col4  = st.columns((.1, 2.4, 4.6))
         
     with row3_col2:
-        st.markdown('Investigate the time trend of (Total time/ Count) of a module.') 
+        st.markdown('Investigate the time trend of (Total time/ Count) per component (as per module selected above).') 
         filteredDf = perioddata.loc[perioddata['Module'] == module_selected]
         groupbydf = filteredDf.copy()
         groupbydf = groupbydf.groupby(['DT Reason Detail'])
@@ -400,11 +482,7 @@ def overall(df: pd.DataFrame, lens, startDate, endDate):
                 st.write(output)
                 
             
-    df = df[['ProdnDate', 'Duration(mins)']]
-    df = df.groupby(df.index // 7).mean()
-    st.write(df)
+            
+            
+            
     
-    fig = px.bar(df, title="Long-Form Input")
-    fig.update_layout(xaxis=dict(rangeslider=dict(visible=True),
-                             type="linear"))
-    st.write(fig)
