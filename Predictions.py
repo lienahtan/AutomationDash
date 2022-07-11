@@ -26,3 +26,5 @@ def predicting(perioddata, dateDict, filter, format):
     
     timeDist = go.Figure(layout = format)
     value = timeDict[filter]
+    
+    st.write(value)
