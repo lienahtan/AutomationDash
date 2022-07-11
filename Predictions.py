@@ -32,7 +32,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
    
     date = list(list(timeDict.values())[0].keys())
     count = list(list(timeDict.values())[0].values())
-    d = {'Date':date,'Count':days}
+    d = {'Date':date,'Count':count}
     preddf = pd.DataFrame(d)
     st.write(preddf)
     
