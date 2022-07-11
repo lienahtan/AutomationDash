@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np  
 from Operator import operator
-
+from Predictions import predicting
 import streamlit as st
 from typing import Dict, Callable
 from Overall import overall
@@ -50,6 +50,7 @@ lens = st.sidebar.selectbox(
 page_function_mapping: Dict[str, Callable[[pd.DataFrame], None]] = {
     ("Automation Overview"): overall,
     ("Operator Insight"): operator,
+    ("Predictions"): predicting,
    
 }
 
