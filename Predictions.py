@@ -20,12 +20,13 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     
     timeDict = {}
     
-    timeDict.update({filter: dateDict.copy()})
+    timeDict.update({rootcause_selected: dateDict.copy()})
     
     for row in filteredDf.values.tolist():
-        timeDict[row[5]][row[0].strftime("%#d/%#m/%Y")] += float(row[4])
+        timeDict[row[8]][row[0].strftime("%#d/%#m/%Y")] += float(row[4])
     
     timeDist = go.Figure(layout = format)
-    value = timeDict[filter]
+#     value = timeDict[filter]
     
-    st.write(value)
+    st.write(timeDict)
+    
