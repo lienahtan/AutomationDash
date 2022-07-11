@@ -511,7 +511,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             
             # ---------------------prediction for component level---------------------
             row4_col1, row4_col2, row4_col4  = st.columns((.1, 2.4, 4.6))
-             with row4_col2:
+            with row4_col2:
                 filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
                 groupbydf = filteredDf.copy()
                 groupbydf = groupbydf.groupby(['Diagonstics'])
