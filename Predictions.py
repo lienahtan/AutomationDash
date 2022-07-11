@@ -36,7 +36,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
     preddf = pd.DataFrame(d)
     st.write(preddf)
     
-    datelist = pd.date_range(endDate, periods=period + 1)
+    datelist = pd.date_range(endDate + datetime.timedelta(days=1) , periods=period + 1)
     indexDate = []
     for date in datelist:
         indexDate.append(date.strftime("%#d/%#m/%Y"))
