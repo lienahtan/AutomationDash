@@ -15,10 +15,10 @@ st.set_page_config(
     layout="wide",
 )      
 
-image = Image.open(r"C:\Users\hanna\Downloads\AAA.png")
+image = Image.open(r"AAA.png")
 st.image(image, width=1480)
 
-image = Image.open(r"C:\Users\SPLSIP149\Downloads\Shimano.png")
+image = Image.open(r"Shimano.jpeg")
 st.sidebar.image(image)
 
 rerun = st.sidebar.button('Rerun')
