@@ -13,7 +13,7 @@ import scipy.stats as stats
 import statistics
 
 
-def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate):
+def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period):
     
     filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
     filteredDf = filteredDf.loc[perioddata['Diagonstics'] == rootcause_selected]
