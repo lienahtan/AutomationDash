@@ -30,7 +30,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
     preddf = preddf.rename(columns={preddf.columns[0]: 'Date'})
     
     st.write(preddf)
-    st.write(list(timeDict.values())[0].keys().tolist())
+    st.write(list(list(timeDict.values())[0].keys()))
     
     datelist = pd.date_range(endDate, periods=period + 1)
     indexDate = []
