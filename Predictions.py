@@ -11,6 +11,7 @@ import plotly.figure_factory as ff
 import numpy as np
 import scipy.stats as stats
 import statistics
+import datetime
 
 
 def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period):
