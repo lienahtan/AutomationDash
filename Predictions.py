@@ -14,7 +14,7 @@ import statistics
 
 
 def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period):
-    
+    period = 7
     filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
     filteredDf = filteredDf.loc[perioddata['Diagonstics'] == rootcause_selected]
     
@@ -40,5 +40,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
     indexDate = []
     for date in datelist:
         indexDate.append(date.strftime("%#d/%#m/%Y"))
+    st.write(indexDate)
+    
         
     
