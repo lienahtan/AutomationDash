@@ -16,7 +16,7 @@ st.set_page_config(
 )      
 
 image = Image.open(r"AAA.png")
-st.image(image, width=1480)
+st.image(image, width=480)
 
 image = Image.open(r"Shimano.jpeg")
 st.sidebar.image(image)
