@@ -27,7 +27,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
         
     st.write(timeDict)
     st.write(timeDict.values())
-    preddf = pd.DataFrame.from_dict(timeDict.values())
+    preddf = pd.DataFrame.from_dict(timeDict.values()).T
     
-    st.write(preddf)
+    st.write(preddf[""])
     
