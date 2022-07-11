@@ -26,8 +26,8 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
         timeDict[row[8]][row[0].strftime("%#d/%#m/%Y")] += float(row[4])
         
     st.write(timeDict)
-    st.write(timeDict.values)
-    preddf = pd.DataFrame(timeDict.values.items())
+    st.write(timeDict.values())
+    preddf = pd.DataFrame(timeDict.values().items())
     
     st.write(preddf)
     
