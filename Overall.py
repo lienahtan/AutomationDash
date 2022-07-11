@@ -13,7 +13,6 @@ import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import calendar
-from charts import AAgauge
 from streamlit_echarts import st_echarts
 from df_creation import get_dateDict
 import hydralit_components as hc
