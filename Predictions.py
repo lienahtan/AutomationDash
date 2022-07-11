@@ -35,6 +35,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
     count = list(list(timeDict.values())[0].values())
     d = {'Date':date,'Count':count}
     preddf = pd.DataFrame(d)
+    preddf.columns = ['y', 'ds']
     st.write(preddf)
     
     datelist = pd.date_range(endDate + datetime.timedelta(days=1) , periods=period + 1)
