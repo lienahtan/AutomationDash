@@ -13,7 +13,7 @@ import scipy.stats as stats
 import statistics
 
 
-def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
+def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate):
     
     filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
     filteredDf = filteredDf.loc[perioddata['Diagonstics'] == rootcause_selected]
@@ -30,7 +30,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     preddf = preddf.rename(columns={preddf.columns[0]: 'Date'})
     
     st.write(preddf)
-    st.write(list(timeDict.values())[0].keys())
+    st.write(list(timeDict.values())[0].keys().tolist())
     
     datelist = pd.date_range(endDate, periods=period + 1)
     indexDate = []
