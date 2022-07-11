@@ -6,7 +6,8 @@ import numpy as np
 import scipy.stats as stats
 import statistics
 import datetime
-import prophet
+%pip install Prophet
+from prophet import Prophet
 
 
 def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period):
