@@ -25,7 +25,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     for row in filteredDf.values.tolist():
         timeDict[row[8]][row[0].strftime("%#d/%#m/%Y")] += float(row[4])
     
-    timeDist = go.Figure(layout = format)
+#     timeDist = go.Figure(layout = format)
 #     value = timeDict[filter]
     
     st.write(timeDict)
