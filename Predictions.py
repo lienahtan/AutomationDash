@@ -13,9 +13,10 @@ import scipy.stats as stats
 import statistics
 
 
-def predicting(perioddata, dateDict, filter, format):
+def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     
-    filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == filter]
+    filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
+    filteredDf = filteredDf.loc[perioddata['Diagonstics'] == alarmSelected]
     
     timeDict = {}
     
