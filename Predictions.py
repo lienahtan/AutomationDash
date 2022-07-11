@@ -27,7 +27,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
 
         
     preddf = pd.DataFrame.from_dict(timeDict.values()).T
-    preddf.rename(columns = { : 'First Name', 0 : 'Age'}, inplace = True)
+    preddf = preddf.rename(columns={df.columns[0]: 'Date'})
     
     st.write(preddf)
     
