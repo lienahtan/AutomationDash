@@ -6,7 +6,6 @@ import numpy as np
 import scipy.stats as stats
 import statistics
 import datetime
-%pip install Prophet
 from prophet import Prophet
 
 
