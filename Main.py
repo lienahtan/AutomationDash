@@ -31,7 +31,7 @@ st.sidebar.info("[Guide to AAA's Full Functionality.](https://docs.google.com/sp
 st.sidebar.markdown(f'<h1 style="color:#1974D2	; font-size:18px;">{"Step 1:"}</h1>',
                     unsafe_allow_html=True)
 
-excelSheet = pd.ExcelFile(r"C:\Users\SPLSIP149\Desktop\Data from Adrian - Newest\TestData.xlsx")
+excelSheet = pd.ExcelFile(r"TestData.xlsx")
 automation = st.sidebar.selectbox(
     label="Choose automation",
     options=excelSheet.sheet_names
