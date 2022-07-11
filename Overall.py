@@ -519,7 +519,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             with row4_col2:
                  st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
                                 use_container_width=True)
-                 st.write(predicting(perioddata, dateDict, filter, format))
+                 st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected,))
                     
                     
                     
