@@ -30,5 +30,5 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     preddf = preddf.rename(columns={preddf.columns[0]: 'Date'})
     
     st.write(preddf)
-    st.write(list(timeDict.values())[0][0])
+    st.write(list(timeDict.values())[0])
     
