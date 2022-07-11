@@ -43,6 +43,7 @@ lens = st.sidebar.selectbox(
     options=[
         "Automation Overview",
         "Operator Insight",
+        "Predictions"
     ]
 )
 
