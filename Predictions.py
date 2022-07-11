@@ -26,14 +26,19 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
         timeDict[row[8]][row[0].strftime("%#d/%#m/%Y")] += float(row[4])
     
           
-    preddf = pd.DataFrame.from_dict(timeDict.values()).T
-    preddf = preddf.rename(columns={preddf.columns[0]: 'Date'})
+#     preddf = pd.DataFrame.from_dict(timeDict.values()).T
+#     preddf = preddf.rename(columns={preddf.columns[0]: 'Date'})
     
+   
+    date = list(list(timeDict.values())[0].keys())
+    count = list(list(timeDict.values())[0].values())
+    d = {'Date':date,'Count':days}
+    preddf = pd.DataFrame(d)
     st.write(preddf)
-    st.write(list(list(timeDict.values())[0].keys()))
-    st.write(list(list(timeDict.values())[0].values()))
     
     datelist = pd.date_range(endDate, periods=period + 1)
     indexDate = []
     for date in datelist:
         indexDate.append(date.strftime("%#d/%#m/%Y"))
+        
+    
