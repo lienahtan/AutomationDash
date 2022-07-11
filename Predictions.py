@@ -34,5 +34,5 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected,):
     
     datelist = pd.date_range(endDate, periods=period + 1)
     indexDate = []
-        for date in datelist:
-            indexDate.append(date.strftime("%#d/%#m/%Y"))
+    for date in datelist:
+        indexDate.append(date.strftime("%#d/%#m/%Y"))
