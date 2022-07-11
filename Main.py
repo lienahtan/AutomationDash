@@ -66,7 +66,7 @@ else:
     # Nathaniel's data set location
     # TO BE USED FOR EASE OF CHANGING OF CODE
     st.sidebar.warning("Please upload an excel file if not you are running a TESTER file.")
-    dataset_location = r"C:\Users\SPLSIP149\Desktop\Data from Adrian - Newest\TestData.xlsx"
+    dataset_location = r"TestData.xlsx"
     df = pd.read_excel(dataset_location, sheet_name= automation).iloc[:, : ]
    
 #Selection of Data range for primary analysis
