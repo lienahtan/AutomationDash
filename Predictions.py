@@ -1,17 +1,12 @@
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from collections import OrderedDict
 import chart_studio.plotly as py
-from plotly.graph_objs import *
-import matplotlib.pyplot as plt
-from plotly.subplots import make_subplots
-import plotly.express as px 
-import plotly.figure_factory as ff
 import numpy as np
 import scipy.stats as stats
 import statistics
 import datetime
+from fbprophet import Prophet
 
 
 def predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period):
@@ -42,7 +37,7 @@ def predicting(perioddata, dateDict, component_selected, rootcause_selected, end
     indexDate = []
     for date in datelist:
         indexDate.append(date.strftime("%#d/%#m/%Y"))
-    st.write(indexDate)
+#     st.write(indexDate)
     
         
     
