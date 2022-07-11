@@ -517,9 +517,10 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             groupbydf = groupbydf.groupby(['Diagonstics'])
 
             with row4_col2:
-                 st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
+                period = 30
+                st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
                                 use_container_width=True)
-                 st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected,))
+                st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
                     
                     
                     
