@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 from plotly.subplots import make_subplots
 import plotly.express as px 
 from utils import hasitimproved, moduledistributionChart, alarmsTable, componenttimeChart, componentcountChart, componentdistributionChart
-from reco import findoutliers
 from utils import automationAvail, counttimeDate, componentmeantime, faulttimeChart, faultcountChart
 from utils import modulecountChart, moduletimeChart, paretoChart, componentTable, faultdistributionChart
+from reco import findoutliers
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
@@ -16,7 +16,7 @@ import calendar
 from streamlit_echarts import st_echarts
 from df_creation import get_dateDict
 import hydralit_components as hc
-
+from Predictions import predicting
 
 def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlastday, latestmonthfirstday):
     
@@ -508,6 +508,17 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                     st.plotly_chart(faultdistributionChart(perioddata, dateDict, component_selected, rootcause_selected),
                                 use_container_width=True)
             
+            
+            # ---------------------prediction for component level---------------------
+            row4_col1, row4_col2, row4_col4  = st.columns((.1, 2.4, 4.6))
+             with row4_col2:
+                filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
+                groupbydf = filteredDf.copy()
+                groupbydf = groupbydf.groupby(['Diagonstics'])
+                
+            with row4_col4:
+                 st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
+                                use_container_width=True)
 
             # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
                         
