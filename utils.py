@@ -485,7 +485,7 @@ def moduledistributionChart(perioddata, dateDict, module):
         
     colors = ['rgb(30, 50, 100)']
     
-    distPlot = ff.create_distplot([[i for i in list(timeDict[module].values()) if i != 0]], [module], colors=colors,
+    distPlot = ff.create_distplot([[i for i in list(timeDict[module].values())]], [module], colors=colors,
                             show_curve=True)
     
     distPlot.update_layout(legend=dict(
@@ -521,7 +521,7 @@ def componentdistributionChart(perioddata, dateDict, component):
     
     colors = ['rgb(30, 50, 100)']
 
-    distPlot = ff.create_distplot([[i for i in list(timeDict[component].values()) if i != 0]], [component], colors=colors,
+    distPlot = ff.create_distplot([[i for i in list(timeDict[component].values())]], [component], colors=colors,
                             show_curve=True)
     
     distPlot.update_layout(legend=dict(
@@ -910,7 +910,7 @@ def faultdistributionChart(perioddata, dateDict, DT , alarm):
     
     colors = ['rgb(30, 50, 100)']
 
-    distPlot = ff.create_distplot([[i for i in list(timeDict[alarm].values()) if i != 0]], [alarm], colors=colors,
+    distPlot = ff.create_distplot([[i for i in list(timeDict[alarm].values())]], [alarm], colors=colors,
                             show_curve=True)
     
     distPlot.update_layout(legend=dict(
