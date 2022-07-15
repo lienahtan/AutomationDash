@@ -510,17 +510,17 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             
             
             # ---------------------prediction for component level---------------------
-            row4_col1, row4_col2  = st.columns((0.1, 4.6))
+#             row4_col1, row4_col2  = st.columns((0.1, 4.6))
 
-            filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
-            groupbydf = filteredDf.copy()
-            groupbydf = groupbydf.groupby(['Diagonstics'])
+#             filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
+#             groupbydf = filteredDf.copy()
+#             groupbydf = groupbydf.groupby(['Diagonstics'])
 
-            with row4_col2:
-                period = 30
-                st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
-                                use_container_width=True)
-                st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+#             with row4_col2:
+#                 period = 30
+#                 st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
+#                                 use_container_width=True)
+#                 st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
                     
                     
                     
