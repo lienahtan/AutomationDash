@@ -1,5 +1,3 @@
-from re import I
-from tkinter import W
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
