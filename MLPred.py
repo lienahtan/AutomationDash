@@ -74,6 +74,52 @@ def MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate
     # using 80% 20% to train data
     Xtrain, Xtest, Ytrain, Ytest = final_x[:-ntest], final_x[-ntest:], y[:-ntest], y[-ntest:]
     
+    # Grid Search
+    st.subheader("Conducting Gridsearch to find hyperparameters")
+    model = RandomForestRegressor()
+    param_search = { 
+        'n_estimators': [20, 50, 100],
+        'max_features': ['auto', 'sqrt', 'log2'],
+        'max_depth' : [i for i in range(5,15)]
+    }
+    
+    def regression_results(y_true, y_pred):
+        # Regression metrics
+        explained_variance=metrics.explained_variance_score(y_true, y_pred)
+        mean_absolute_error=metrics.mean_absolute_error(y_true, y_pred) 
+        mse=metrics.mean_squared_error(y_true, y_pred) 
+        mean_squared_log_error=metrics.mean_squared_log_error(y_true, y_pred)
+        median_absolute_error=metrics.median_absolute_error(y_true, y_pred)
+        r2=metrics.r2_score(y_true, y_pred)
+        st.write('explained_variance: ', round(explained_variance,4))    
+        st.write('mean_squared_log_error: ', round(mean_squared_log_error,4))
+        st.write('r2: ', round(r2,4))
+        st.write('MAE: ', round(mean_absolute_error,4))
+        st.write('MSE: ', round(mse,4))
+        st.write('RMSE: ', round(np.sqrt(mse),4))
+        
+    def rmse(actual, predict):
+        predict = np.array(predict)
+        actual = np.array(actual)
+        distance = predict - actual
+        square_distance = distance ** 2
+        mean_square_distance = square_distance.mean()
+        score = np.sqrt(mean_square_distance)
+        return score
+    rmse_score = make_scorer(rmse, greater_is_better = False)
+    
+    tscv = TimeSeriesSplit(n_splits=5)
+    gsearch = GridSearchCV(estimator=model, cv=tscv, param_grid=param_search, scoring = rmse_score)
+    
+    gsearch.fit(Xtrain, Ytrain)
+    best_score = gsearch.best_score_
+    best_model = gsearch.best_estimator_
+    
+    y_true = Ytest.values
+    y_pred = best_model.predict(Xtest)
+    regression_results(y_true, y_pred)
+
+    
     # models from the internet
     st.subheader('Algorithm Comparison')
     models = []
