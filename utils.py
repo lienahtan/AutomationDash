@@ -77,7 +77,7 @@ def moduleTable(timeDict, format, headers):
         timepercountHolder.append(round(value[0]/ value[1], -0))
 
     time_fig = go.Figure(data=[go.Table(
-        columnwidth = [2,1,1,1],
+        columnwidth = [2,1,1,1], 
         header=dict(values= headers,
                     fill_color= '#5DADEC',
                     align='left'),
@@ -116,7 +116,7 @@ def moduletimeChart(timeDict, format, module_selected):
                 x = list(value.keys()),
                 # input the data for that column
                 y = list(value.values()),
-                
+                name = module_selected,
                 visible = True,
                 mode="lines+text",
                 text = ["" if v == 0 else v for v in list(value.values())],
@@ -126,7 +126,7 @@ def moduletimeChart(timeDict, format, module_selected):
     
     timeDist.add_trace(
         go.Scatter(
-            
+            name = '7-day moving average',
             x = list(value.keys()),
             y = rollingavg['7day_rolling_avg' ],
             visible= True,
@@ -140,8 +140,16 @@ def moduletimeChart(timeDict, format, module_selected):
         yaxis_title="Total Downtime",
         width=750,
         height=500,
-        showlegend = False
+        showlegend = True
     )
+    
+    timeDist.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1
+                ))
     
     return timeDist
 
@@ -184,7 +192,7 @@ def modulecountChart(alarmDict, format, module_selected):
                 yanchor="bottom",
                 y=1.02,
                 xanchor="right",
-                x=0.25
+                x=1
                 ))
         
     timeDistCount.update_layout(
@@ -202,7 +210,11 @@ def distributionChart(timeDict, format, module_selected):
     value = timeDict[module_selected]
     colors = ['rgb(0, 10, 100)']
     
-    distPlot = ff.create_distplot([[i for i in list(value.values()) if i != 0]], [module_selected], colors=colors,
+    # distPlot = ff.create_distplot([[i for i in list(value.values()) if i != 0]], [module_selected], colors=colors,
+    #                         show_curve=True)
+    
+    
+    distPlot = ff.create_distplot([[i for i in list(value.values())]], [module_selected], colors=colors,
                             show_curve=True)
     
     # distPlot.add_trace(
@@ -280,9 +292,9 @@ def paretoChart(perioddata, typeofChart):
     paretoChart.update_layout(legend=dict(
     orientation="h",
     yanchor="bottom",
-    y=1.02,
-    xanchor="left",
-    x=0.6
+    y=1,
+    xanchor="right",
+    x=1
     ))
     
     morethan50 = []
@@ -348,7 +360,7 @@ def componentTable(perioddata, format, filter, prevdata):
     )
     component_fig.update_traces(cells_font=dict(size = 16))    
 
-    return component_fig
+    return [component_fig, componentDict]
 
 def componenttimeChart(perioddata, dateDict, filter, format):
     
@@ -397,7 +409,7 @@ def componenttimeChart(perioddata, dateDict, filter, format):
                 yanchor="bottom",
                 y=1.02,
                 xanchor="right",
-                x=0.4
+                x=1
                 ))
         
     timeDist.update_layout(
@@ -485,7 +497,7 @@ def moduledistributionChart(perioddata, dateDict, module):
         
     colors = ['rgb(30, 50, 100)']
     
-    distPlot = ff.create_distplot([[i for i in list(timeDict[module].values())]], [module], colors=colors,
+    distPlot = ff.create_distplot([[i for i in list(timeDict[module].values()) if i != 0]], [module], colors=colors,
                             show_curve=True)
     
     distPlot.update_layout(legend=dict(
@@ -521,7 +533,7 @@ def componentdistributionChart(perioddata, dateDict, component):
     
     colors = ['rgb(30, 50, 100)']
 
-    distPlot = ff.create_distplot([[i for i in list(timeDict[component].values())]], [component], colors=colors,
+    distPlot = ff.create_distplot([[i for i in list(timeDict[component].values()) if i != 0]], [component], colors=colors,
                             show_curve=True)
     
     distPlot.update_layout(legend=dict(
@@ -596,17 +608,23 @@ def hasitimproved(perioddata):
         # printer(p_value)
         
         alpha = 0.05
-        if one_tailed_p_value<=alpha:
-            percentage = abs(round(((last30daysavg - statistics.mean(prevdata))/ statistics.mean(prevdata)) * 100, 1))
-            if statistics.mean(prevdata) > last30daysavg:
-                improvedoutput += str(module) + "'s DT ⤵️ "
-                improvedoutput += str(percentage) + '%'
-                improvedoutput += '\n\n'
-                
-            else:
-                noimprovedoutput += str(module) + "'s DT ⤴️ " 
-                noimprovedoutput += str(percentage) + '%'
-                noimprovedoutput += '\n\n'
+        if len(prevdata) == 0:
+            improvedoutput += 'Pikes warning not available: Not enough data'
+        elif statistics.mean(prevdata) == 0:
+            improvedoutput += 'Pikes warning not available: Not enough data'
+        else:
+            if one_tailed_p_value<=alpha:
+                st.write(statistics.mean(prevdata))
+                percentage = abs(round(((last30daysavg - statistics.mean(prevdata))/ statistics.mean(prevdata)) * 100, 1))
+                if statistics.mean(prevdata) > last30daysavg:
+                    improvedoutput += str(module) + "'s DT ⤵️ "
+                    improvedoutput += str(percentage) + '%'
+                    improvedoutput += '\n\n'
+                    
+                else:
+                    noimprovedoutput += str(module) + "'s DT ⤴️ " 
+                    noimprovedoutput += str(percentage) + '%'
+                    noimprovedoutput += '\n\n'
                 
     return [improvedoutput, noimprovedoutput]
         
@@ -820,7 +838,7 @@ def faulttimeChart(perioddata, dateDict, DT, alarm, format):
                 yanchor="bottom",
                 y=1.02,
                 xanchor="right",
-                x=0.25
+                x=1
                 ))      
         
     timeDist.update_layout(
@@ -910,15 +928,18 @@ def faultdistributionChart(perioddata, dateDict, DT , alarm):
     
     colors = ['rgb(30, 50, 100)']
 
-    distPlot = ff.create_distplot([[i for i in list(timeDict[alarm].values())]], [alarm], colors=colors,
+    distPlot = ff.create_distplot([list(timeDict[alarm].values())], [alarm], colors=colors,
                             show_curve=True)
+
+    # distPlot = ff.create_distplot([[i for i in list(timeDict[alarm].values()) if i != 0]], [alarm], colors=colors,
+    #                         show_curve=True)
     
     distPlot.update_layout(legend=dict(
                 orientation="h",
                 yanchor="bottom",
                 y=1.02,
                 xanchor="right",
-                x=0.25
+                x=1
                 ))
     
     distPlot.update_layout(
