@@ -1,5 +1,3 @@
-from multiprocessing.spawn import prepare
-from tkinter import Y
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
