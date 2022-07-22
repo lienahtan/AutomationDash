@@ -1,3 +1,5 @@
+from re import I
+from tkinter import W
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
@@ -6,17 +8,20 @@ import matplotlib.pyplot as plt
 from plotly.subplots import make_subplots
 import plotly.express as px 
 from utils import hasitimproved, moduledistributionChart, alarmsTable, componenttimeChart, componentcountChart, componentdistributionChart
+from reco import findoutliers
 from utils import automationAvail, counttimeDate, componentmeantime, faulttimeChart, faultcountChart
 from utils import modulecountChart, moduletimeChart, paretoChart, componentTable, faultdistributionChart
-from reco import findoutliers
+from Predictions import predicting
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
 from pandas_profiling import ProfileReport
 import calendar
+from charts import AAgauge
 from streamlit_echarts import st_echarts
 from df_creation import get_dateDict
 import hydralit_components as hc
-from Predictions import predicting
+from MLPred import MLPred
+
 
 def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlastday, latestmonthfirstday):
     
@@ -218,6 +223,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                 st_echarts(options, width="450px", height="350px", key="gauge")
               
             
+            # Adding to the 3 main metrics
             fig1 = go.Figure(layout = format)
             
             fig1.add_trace(go.Indicator(
@@ -252,7 +258,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                 height=130,
                 paper_bgcolor= "#ADD8E6")
             with key_indicators:
-                st.plotly_chart(fig2,use_container_width= True)
+                st.plotly_chart(fig2, use_container_width= True)
                 
                 
             fig3 = go.Figure(layout = format)
@@ -364,15 +370,15 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             row2_col1, row2_col2 = st.columns((1,1))            
             
             with row2_col1:
-                chart = paretoChart(perioddata, 'time')
+                timechart = paretoChart(perioddata, 'time')
                 
                 # paretoTimeOutput = '🔹 ' + str(chart[1])
-                causesReco1 = chart[1]
+                causesReco1 = timechart[1]
                 
                 if tableORgraph1:
-                    st.table(chart[2])
+                    st.table(timechart[2])
                 else:
-                    st.plotly_chart(chart[0], use_container_width=True)
+                    st.plotly_chart(timechart[0], use_container_width=True)
                 
             with row2_col2:
                 # chart's second output is a top cause of failure
@@ -406,11 +412,12 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             row1_col1, row1_col2, row1_col4  = st.columns((.1, 2.4, 4.6))
             
             with row1_col2:   
-    
-                module_selected = st.selectbox ("Which module do you want to analyze?", list(timeDict.keys()))
+                queryOptions = timechart[2].index.tolist()
+                module_selected = st.selectbox ("Which module do you want to analyze?", queryOptions)
                 measure_selected = st.selectbox ("Which measure do you want to analyze?", ['Total time', 'Count', 'Distribution'])
                 st.markdown('Components of selected module (Scroll)')
-                st.plotly_chart(componentTable(perioddata, format, module_selected, prevdata), use_container_width=True)
+                componentBreakdown = componentTable(perioddata, format, module_selected, prevdata)
+                st.write(componentBreakdown[0], use_container_width=True)
                 
             with row1_col4:
                 if module_selected == None:
@@ -449,13 +456,16 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             row3_col1, row3_col2, row3_col4  = st.columns((.1, 2.4, 4.6))
                 
             with row3_col2:
+            
                 filteredDf = perioddata.loc[perioddata['Module'] == module_selected]
                 groupbydf = filteredDf.copy()
                 groupbydf = groupbydf.groupby(['DT Reason Detail'])
             
+                # to get keys for the groupby, replaced by getting it directly from the dataframe
                 uniqueComponents = list(groupbydf.groups.keys())
                 # also known as alarm selected
-                component_selected = st.selectbox ("Which component do you want to analyze?", uniqueComponents)
+                alarmquery = componentBreakdown[1]['Component'].tolist()
+                component_selected = st.selectbox ("Which alarm do you want to analyze?", alarmquery)
                 component_measure_selected = st.selectbox ("Select measure you want to analyze", ['Total time', 'Count', 'Distribution'])
                 title = ['Total Time Spent per Alarm', 'Time (Minutes)', 'Count', 'Time per Count']
                 
@@ -508,23 +518,27 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                     st.plotly_chart(faultdistributionChart(perioddata, dateDict, component_selected, rootcause_selected),
                                 use_container_width=True)
             
-            
+
+
             # ---------------------prediction for component level---------------------
-#             row4_col1, row4_col2  = st.columns((0.1, 4.6))
+            row4_col1, row4_col2  = st.columns((0.1, 4.6))
 
-#             filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
-#             groupbydf = filteredDf.copy()
-#             groupbydf = groupbydf.groupby(['Diagonstics'])
+            filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
+            groupbydf = filteredDf.copy()
+            groupbydf = groupbydf.groupby(['Diagonstics'])
 
-#             with row4_col2:
-#                 period = 30
-#                 st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
-#                                 use_container_width=True)
-#                 st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+            with row4_col2:
+                if noofdays < 60:
+                    st.write('Not enough days for prediction.')
+                else:
+                    period = 30
+                    # st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
+                    #                 use_container_width=True)
+                    # st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+                    # st.write(MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
                     
-                    
-                    
-                 
+                    st.write(MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+
 
             # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
                         
@@ -553,7 +567,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             rowe2_col1, rowe2_col3  = st.columns((.1, 4.6))
             
             with rowe2_col3:
-                component_selected = st.selectbox ("Select component to view", uniqueComponents)
+                component_selected = st.selectbox ("Select component to view", alarmquery)
                 st.plotly_chart(counttimeDate(perioddata, component_selected), use_container_width= True)
             
                 
@@ -582,7 +596,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                     st.info('✅ Good! No correlation between modules found.')
                 else:
                     with key_metrics:
-                        see_corr = st.expander('⚠ Warning! High Correlation Found')
+                        see_corr = st.expander('⚠ Significant Module Correlation Found')
                         with see_corr:
                             st.error(corroutput)
                     
