@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide",
 )      
 
-image = Image.open(r"AAA.png")
+image = Image.open(r"AAA.jfif")
 st.image(image, width=480)
 
 image = Image.open(r"Shimano.jpeg")
