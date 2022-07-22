@@ -1,4 +1,7 @@
+from tkinter import N
 import scipy.stats as stats
+
+
 
 # calculating outliers
 # timedict takes in a dict with key being the modulue, value has {date: value}
