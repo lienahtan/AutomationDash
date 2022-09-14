@@ -7,7 +7,7 @@ import scipy.stats as stats
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, make_scorer
 from math import sqrt
 from sklearn.neural_network import MLPRegressor
 from sklearn.neighbors import KNeighborsRegressor
