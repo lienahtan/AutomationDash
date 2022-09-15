@@ -17,7 +17,7 @@ st.set_page_config(
 image = Image.open(r"AAA.jfif")
 st.image(image, width=1480)
 
-image = Image.open(r"Shimano.jpeg")
+image = Image.open(r"samplelogo.png")
 st.sidebar.image(image)
 
 rerun = st.sidebar.button('Rerun')
