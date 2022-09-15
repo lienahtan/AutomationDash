@@ -516,45 +516,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                 elif rootcause_measure_selected == 'Distribution':
                     st.plotly_chart(faultdistributionChart(perioddata, dateDict, component_selected, rootcause_selected),
                                 use_container_width=True)
-            # -----------------------------------Detailed outliers-----------------------------
-        
-
-                    
-                
-            # --------------------------------------ALL RECOMMENDATIONS ---------------------------------------------------
-            with key_metrics:
-                chartReco = st.expander("〽️ Over the last 30 days:", expanded=True)
-                with chartReco:
-                    st.warning(chartReco1)
-                    st.warning(chartreco2)
-                
-                if outliers == 'No outliers':
-                    with key_metrics:
-                        st.success('✅ Good! No outliers found')
-                    
-                else:
-                    see_outliers = st.expander('🖱️ Possible outlliers found.')
-                    with see_outliers:
-                        st.error(outliers)
-                        
-                if corroutput == '':
-                    st.info('✅ Good! No correlation between modules found.')
-                else:
-                    with key_metrics:
-                        see_corr = st.expander('⚠ Significant Module Correlation Found')
-                        with see_corr:
-                            st.error(corroutput)
-                    
-                    
-            with key_metrics2:
-                downtimecausesReco = st.expander("➿ Top 3 Module Downtime: ", expanded=True)
-                with downtimecausesReco:
-                    st.info(causesReco1)
-                   
-                    
-                freqcausesReco = st.expander("➿ Top 3 Module Count: ", expanded=True)
-                with freqcausesReco:
-                    st.info(causesReco2)
+          
 
 
             # ---------------------prediction for component level---------------------
@@ -611,6 +573,47 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             with rowe2_col3:
                 component_selected = st.selectbox ("Select component to view", alarmquery)
                 st.plotly_chart(counttimeDate(perioddata, component_selected), use_container_width= True)
+                
+           
+            # -----------------------------------Detailed outliers-----------------------------
+        
+
+                    
+                
+            # --------------------------------------ALL RECOMMENDATIONS ---------------------------------------------------
+            with key_metrics:
+                chartReco = st.expander("〽️ Over the last 30 days:", expanded=True)
+                with chartReco:
+                    st.warning(chartReco1)
+                    st.warning(chartreco2)
+                
+                if outliers == 'No outliers':
+                    with key_metrics:
+                        st.success('✅ Good! No outliers found')
+                    
+                else:
+                    see_outliers = st.expander('🖱️ Possible outlliers found.')
+                    with see_outliers:
+                        st.error(outliers)
+                        
+                if corroutput == '':
+                    st.info('✅ Good! No correlation between modules found.')
+                else:
+                    with key_metrics:
+                        see_corr = st.expander('⚠ Significant Module Correlation Found')
+                        with see_corr:
+                            st.error(corroutput)
+                    
+                    
+            with key_metrics2:
+                downtimecausesReco = st.expander("➿ Top 3 Module Downtime: ", expanded=True)
+                with downtimecausesReco:
+                    st.info(causesReco1)
+                   
+                    
+                freqcausesReco = st.expander("➿ Top 3 Module Count: ", expanded=True)
+                with freqcausesReco:
+                    st.info(causesReco2)
             
                 
             
