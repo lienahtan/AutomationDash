@@ -14,8 +14,8 @@ st.set_page_config(
     layout="wide",
 )      
 
-image = Image.open(r"AAA.jfif")
-st.image(image, width=1480)
+# image = Image.open(r"AAA.jfif")
+# st.image(image, width=1480)
 
 image = Image.open(r"samplelogo.png")
 st.sidebar.image(image)
