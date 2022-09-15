@@ -109,26 +109,3 @@ page_function_mapping[lens](df, automation, startDate, endDate, lastMonthfirstda
 
 
 
-
-
-
-
-
-
-
-# read csv from a Excel file
-# @st.experimental_memo
-# def get_data() -> pd.DataFrame:
-#     return pd.read_excel(dataset_location, sheet_name= automation)
-
-# df = get_data() 
-
-# if connectDataButton == False:
-#     df = pd.read_excel(dataset_location, sheet_name= automation)
-    
-# else:
-#     df = new_data
-#     # df = pd.read_excel(dataset_location, sheet_name= automation)
-
-# df = pd.read_excel(dataset_location, sheet_name= automation)
-# page_function_mapping[view](df, automation)
