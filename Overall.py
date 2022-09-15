@@ -518,34 +518,6 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                                 use_container_width=True)
           
 
-
-            # ---------------------prediction for component level---------------------
-            row4_spacer1, row4_1, row4_spacer2 = st.columns((.2, 7.1, .2))
-            with row4_1:
-                st.subheader("f) Forecasting using Machine Learning")
-                st.markdown(f'<h2 style="text-align: left; color:#5F9EA0; font-size:18px;">{"Forecasts the downtime of an alarm."}</h1>', unsafe_allow_html=True)
-            
-            
-            row4_col1, row4_col2  = st.columns((0.1, 4.6))
-
-            filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
-            groupbydf = filteredDf.copy()
-            groupbydf = groupbydf.groupby(['Diagonstics'])
-
-            with row4_col2:
-                if noofdays < 60:
-                    st.write('Not enough days for prediction.')
-                else:
-                    # st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
-                    #                 use_container_width=True)
-                    # st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
-                    # st.write(MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
-                    alarmquery = perioddata['DT Reason Detail'].unique().tolist()
-                    st.write(MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate))
-
-
-            # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
-                        
             # ----------------------RECOMENDATION OUTLIERS---------------------
             outliers = findoutliers(timeDict)
                         
@@ -614,6 +586,34 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                 freqcausesReco = st.expander("➿ Top 3 Module Count: ", expanded=True)
                 with freqcausesReco:
                     st.info(causesReco2)
+            # ---------------------prediction for component level---------------------
+            row4_spacer1, row4_1, row4_spacer2 = st.columns((.2, 7.1, .2))
+            with row4_1:
+                st.subheader("f) Forecasting using Machine Learning")
+                st.markdown(f'<h2 style="text-align: left; color:#5F9EA0; font-size:18px;">{"Forecasts the downtime of an alarm."}</h1>', unsafe_allow_html=True)
+            
+            
+            row4_col1, row4_col2  = st.columns((0.1, 4.6))
+
+            filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
+            groupbydf = filteredDf.copy()
+            groupbydf = groupbydf.groupby(['Diagonstics'])
+
+            with row4_col2:
+                if noofdays < 60:
+                    st.write('Not enough days for prediction.')
+                else:
+                    # st.plotly_chart(faulttimeChart(perioddata, dateDict, component_selected, rootcause_selected, format),
+                    #                 use_container_width=True)
+                    # st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+                    # st.write(MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
+                    alarmquery = perioddata['DT Reason Detail'].unique().tolist()
+                    st.write(MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate))
+
+
+            # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
+                        
+            
             
                 
             
