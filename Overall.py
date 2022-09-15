@@ -132,7 +132,8 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
 
         
         if menu_id == "View Dataset":
-            st.write(perioddata)
+            st.write("Please approach admin for dataset.")
+#             st.write(perioddata)
             
             
         if menu_id == "Dashboard":
