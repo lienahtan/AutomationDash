@@ -578,7 +578,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                     # st.write(predicting(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
                     # st.write(MLPred(perioddata, dateDict, component_selected, rootcause_selected, endDate, period))
                     alarmquery = perioddata['DT Reason Detail'].unique().tolist()
-                    st.write(MLPred(perioddata, dateDict, alarmquery[:5], rootcause_selected, endDate))
+                    st.write(MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate))
 
 
             # st.markdown('<style>body{background-color: Blue;}</style>',unsafe_allow_html=True)
