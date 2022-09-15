@@ -85,7 +85,7 @@ def operator(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlas
             with main1:
                 operatorNames = ''
                 for i in operators:
-                    operatorNames += 1
+                    operatorNames += i
                     operatorNames += '\n\n'
                 st.markdown(f'<h2 style="text-align: left; color:#2F847C; font-size:18px;">{"Operators present:"}</h1>', unsafe_allow_html=True)
                 st.success(operatorNames)
