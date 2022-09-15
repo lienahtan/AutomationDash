@@ -28,7 +28,7 @@ def MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate,):
     if period > 30:
         st.warning("Your forecasting accuracy will be affected due to extended forecasting period.")
 
-    for component_selected in alarmquery[9:15]:
+    for component_selected in alarmquery[10:11]:
         st.subheader("Forecast for " + component_selected)
         
         filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
