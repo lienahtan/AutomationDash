@@ -28,7 +28,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
     endDate = pd.to_datetime(endDate)
     
     st.title("Automation Overview for " + automation)
-    st.write("*ONLY FOR DEMO PURPOSES*Best viewed in Light mode*")
+    st.write("*ONLY FOR DEMO PURPOSES* - Best viewed in Light mode")
 
     placeholder = st.empty()
 
