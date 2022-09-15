@@ -47,7 +47,7 @@ def operator(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlas
     data = perioddata.values.tolist()
     dates = []
     modules = []
-    operators = []adfadad
+    operators = []
 
     for row in data:
         if row[0].strftime("%#d/%#m/%Y") not in dates:
