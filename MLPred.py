@@ -314,7 +314,7 @@ def MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate,):
         st.subheader("FORECASTED random forest")
         st.plotly_chart(ForecastForestDist, use_container_width= True)
         
-    st.write(downtimeHolder)
+#     st.write(downtimeHolder)
         
         
         # counttodayto7daysago = preddf['Count'][-7:].iloc[::-1]
