@@ -28,7 +28,7 @@ def MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate,):
     if period > 30:
         st.warning("Your forecasting accuracy will be affected due to extended forecasting period.")
 
-    for component_selected in alarmquery[:5]:
+    for component_selected in alarmquery[:2]:
         st.subheader("Forecast for " + component_selected)
         
         filteredDf = perioddata.loc[perioddata['DT Reason Detail'] == component_selected]
@@ -92,8 +92,6 @@ def MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate,):
         # st.write(final_x) 
         st.subheader("Dataset timeseries")
         st.markdown(f'<h2 style="text-align: left; color:#5F9EA0; font-size:15px;">{"Original dataset with engineered features."}</h1>', unsafe_allow_html=True)
-        with st.expander("Press to see dataset."):
-            st.write(preddf)
         
     
         # testing ValiditY 
