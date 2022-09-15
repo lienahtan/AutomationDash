@@ -24,7 +24,7 @@ rerun = st.sidebar.button('Rerun')
 if rerun:
     st.experimental_rerun()
     
-st.sidebar.info("[Guide to AAA's Full Functionality.](https://docs.google.com/spreadsheets/d/1-ZC0yg14K4Yh2BwuT1ZGfgvPtpxbr1sAr2lYWbfurr0/edit?usp=sharing)")
+st.sidebar.info("[Guide to AAA's Full Functionality. (Access Required)]")
 
 # choose which automation to view, goes to the sheet of the data
 st.sidebar.markdown(f'<h1 style="color:#1974D2	; font-size:18px;">{"Step 1:"}</h1>',
