@@ -216,20 +216,20 @@ def MLPred(perioddata, dateDict, alarmquery, rootcause_selected, endDate,):
         st.plotly_chart(ForestDist, use_container_width= True)
         
         
-        # Ploting features importance
-        imp = best_model.feature_importances_
-        features = preddf.columns[1:].tolist()
-        indices = np.argsort(imp)
+#         # Ploting features importance
+#         imp = best_model.feature_importances_
+#         features = preddf.columns[1:].tolist()
+#         indices = np.argsort(imp)
         
-        plotfeaturesImp = go.Figure(layout = format)
-        plotfeaturesImp.add_trace(
-                go.Bar(
-                    name = "Feature Importance",
-                    x = indices,
-                    text = [features[i] for i in indices]
-                )
-            )
-        st.plotly_chart(plotfeaturesImp, use_container_width= True)
+#         plotfeaturesImp = go.Figure(layout = format)
+#         plotfeaturesImp.add_trace(
+#                 go.Bar(
+#                     name = "Feature Importance",
+#                     x = indices,
+#                     text = [features[i] for i in indices]
+#                 )
+#             )
+#         st.plotly_chart(plotfeaturesImp, use_container_width= True)
         
         
         
