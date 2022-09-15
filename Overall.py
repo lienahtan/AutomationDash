@@ -589,7 +589,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
             # ---------------------prediction for component level---------------------
             row4_spacer1, row4_1, row4_spacer2 = st.columns((.2, 7.1, .2))
             with row4_1:
-                st.subheader("f) Forecasting using Machine Learning")
+                st.subheader("g) Forecasting using Machine Learning")
                 st.markdown(f'<h2 style="text-align: left; color:#5F9EA0; font-size:18px;">{"Forecasts the downtime of an alarm."}</h1>', unsafe_allow_html=True)
             
             
