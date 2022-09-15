@@ -128,7 +128,8 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                                     }
                                 }
                                 )
-            st.dataframe(data=st_profile_report(profile))
+#             st.dataframe(data=st_profile_report(profile))
+            st.write("Report loaded. Please approach admin for dataset.")
 
         
         if menu_id == "View Dataset":
