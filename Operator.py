@@ -73,8 +73,8 @@ def operator(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlas
     over_theme = {'txc_inactive': 'black','menu_background':'#ADD8E6','txc_active':'#0047AB','option_active':'white'}
     # over_theme = {'txc_inactive': '#FFFFFF'} 
     
-#     with placeholder.container():
-#         menu_id = hc.nav_bar(menu_definition=menu_data, home_name='Overview', override_theme=over_theme, sticky_mode='pinned')
+    with placeholder.container():
+        menu_id = hc.nav_bar(menu_definition=menu_data, home_name='Overview', override_theme=over_theme, sticky_mode='pinned')
         
 #         if menu_id == "Overview":
             
