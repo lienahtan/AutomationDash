@@ -416,7 +416,7 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
                 module_selected = st.selectbox ("Which module do you want to analyze?", queryOptions)
                 measure_selected = st.selectbox ("Which measure do you want to analyze?", ['Total time', 'Count', 'Distribution'])
 #                 st.markdown('Components of selected module (Scroll)')
-#                 componentBreakdown = componentTable(perioddata, format, module_selected, prevdata)
+                componentBreakdown = componentTable(perioddata, format, module_selected, prevdata)
 #                 st.write(componentBreakdown[0], use_container_width=True)
                 
             with row1_col4:
