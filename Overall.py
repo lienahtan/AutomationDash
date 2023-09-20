@@ -13,7 +13,7 @@ from utils import modulecountChart, moduletimeChart, paretoChart, componentTable
 from Predictions import predicting
 import pandas_profiling
 from streamlit_pandas_profiling import st_profile_report
-from pandas_profiling import ProfileReport
+# from pandas_profiling import ProfileReport
 import calendar
 from streamlit_echarts import st_echarts
 from df_creation import get_dateDict
@@ -116,19 +116,20 @@ def overall(df, automation, startDate, endDate, lastMonthfirstday, lastMonthlast
         menu_id = hc.nav_bar(menu_definition=menu_data, home_name='Dashboard', override_theme=over_theme)
         
         if menu_id == "Pandas Profiling":            
-            profile = ProfileReport(df, title='Machine data',
-                                variables = {
-                                    "descriptions": {
-                                    'ProdnDate' : '1',
-                                    'ProdnShift' : '2',
-                                    'StartTime' : '3',
-                                    'EndTime' : '4',
-                                    'Duration(mins)' : '5',
-                                    'DT Reason Detail' : '6',
-                                    'Module' : '7'
-                                    }
-                                }
-                                )
+            pass
+            # profile = ProfileReport(df, title='Machine data',
+            #                     variables = {
+            #                         "descriptions": {
+            #                         'ProdnDate' : '1',
+            #                         'ProdnShift' : '2',
+            #                         'StartTime' : '3',
+            #                         'EndTime' : '4',
+            #                         'Duration(mins)' : '5',
+            #                         'DT Reason Detail' : '6',
+            #                         'Module' : '7'
+            #                         }
+            #                     }
+            #                     )
 #             st.dataframe(data=st_profile_report(profile))
             st.write("Report loaded. Please approach admin for dataset.")
 
