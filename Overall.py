@@ -11,8 +11,8 @@ from reco import findoutliers
 from utils import automationAvail, counttimeDate, componentmeantime, faulttimeChart, faultcountChart
 from utils import modulecountChart, moduletimeChart, paretoChart, componentTable, faultdistributionChart
 from Predictions import predicting
-import pandas_profiling
-from streamlit_pandas_profiling import st_profile_report
+# import pandas_profiling
+# from streamlit_pandas_profiling import st_profile_report
 # from pandas_profiling import ProfileReport
 import calendar
 from streamlit_echarts import st_echarts
